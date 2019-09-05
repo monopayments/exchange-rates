@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/monocash/exchange-rates/cmd/server/convert"
+	"github.com/monocash/exchange-rates/cmd/server"
 	"github.com/monocash/exchange-rates/pkg/cache"
 	"github.com/monocash/exchange-rates/pkg/cache/memory"
 	"github.com/op/go-logging"

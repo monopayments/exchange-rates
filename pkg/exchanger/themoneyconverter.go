@@ -14,18 +14,18 @@ import (
 
 // @link : https://themoneyconverter.com/AED/EUR.aspx?amount=1
 
-type theMoneyConverterApi struct {
+type theMoneyConverterAPI struct {
 	attributes
 }
 
 var (
-	theMoneyConverterApiUrl     = `https://themoneyconverter.com/%s/%s.aspx?amount=1`
-	theMoneyConverterApiHeaders = map[string][]string{
+	theMoneyConverterAPIURL     = `https://themoneyconverter.com/%s/%s.aspx?amount=1`
+	theMoneyConverterAPIHeaders = map[string][]string{
 		`Accept`: {`text/html`},
 	}
 )
 
-func (c *theMoneyConverterApi) requestRate(from string, to string, opt ...interface{}) (*theMoneyConverterApi, error) {
+func (c *theMoneyConverterAPI) requestRate(from string, to string, opt ...interface{}) (*theMoneyConverterAPI, error) {
 
 	// todo add option opt to add more headers or client configurations
 	// free mem-leak
@@ -33,12 +33,12 @@ func (c *theMoneyConverterApi) requestRate(from string, to string, opt ...interf
 	// todo optimize curl connection
 
 	// format the url and replace currency
-	url := fmt.Sprintf(theMoneyConverterApiUrl, from, to)
+	url := fmt.Sprintf(theMoneyConverterAPIURL, from, to)
 	// prepare the request
 	req, _ := http.NewRequest("GET", url, nil)
 	// assign the request headers
-	theMoneyConverterApiHeaders[`User-Agent`] = []string{c.userAgent}
-	req.Header = theMoneyConverterApiHeaders
+	theMoneyConverterAPIHeaders[`User-Agent`] = []string{c.userAgent}
+	req.Header = theMoneyConverterAPIHeaders
 
 	// execute the request
 	res, err := c.Client.Do(req)
@@ -60,22 +60,22 @@ func (c *theMoneyConverterApi) requestRate(from string, to string, opt ...interf
 }
 
 // GetRateValue ... get exchange rate value
-func (c *theMoneyConverterApi) GetRateValue() float64 {
+func (c *theMoneyConverterAPI) GetRateValue() float64 {
 	return c.rateValue
 }
 
 // GetRateDateTime ... return rate datetime
-func (c *theMoneyConverterApi) GetRateDateTime() string {
+func (c *theMoneyConverterAPI) GetRateDateTime() string {
 	return c.rateDate.Format(time.RFC3339)
 }
 
 // GetExchangerName ... return exchanger name
-func (c *theMoneyConverterApi) GetExchangerName() string {
+func (c *theMoneyConverterAPI) GetExchangerName() string {
 	return c.name
 }
 
 // Latest ... populate latest exchange rate
-func (c *theMoneyConverterApi) Latest(from string, to string, opt ...interface{}) error {
+func (c *theMoneyConverterAPI) Latest(from string, to string, opt ...interface{}) error {
 
 	// todo cache layer
 	_, err := c.requestRate(from, to, opt)
@@ -107,8 +107,8 @@ func (c *theMoneyConverterApi) Latest(from string, to string, opt ...interface{}
 	return nil
 }
 
-// NewTheMoneyConverterApi ... return new instance of theMoneyConverterApi
-func NewTheMoneyConverterApi(opt map[string]string) *theMoneyConverterApi {
+// NewtheMoneyConverterAPI ... return new instance of theMoneyConverterAPI
+func NewtheMoneyConverterAPI(opt map[string]string) *theMoneyConverterAPI {
 
 	keepAliveTimeout := 600 * time.Second
 	timeout := 5 * time.Second
@@ -136,7 +136,7 @@ func NewTheMoneyConverterApi(opt map[string]string) *theMoneyConverterApi {
 		attr.userAgent = opt[`userAgent`]
 	}
 
-	r := &theMoneyConverterApi{attr}
+	r := &theMoneyConverterAPI{attr}
 
 	return r
 }

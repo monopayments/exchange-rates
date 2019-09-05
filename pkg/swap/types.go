@@ -1,7 +1,7 @@
 package swap
 
 import (
-	mex "github.com/monocah/exchange-rates/pkg/exchanger"
+	mex "github.com/monocash/exchange-rates/pkg/exchanger"
 )
 
 // Swap ... main struct

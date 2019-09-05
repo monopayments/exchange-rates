@@ -11,30 +11,30 @@ import (
 	"time"
 )
 
-type yahooApi struct {
+type yahooAPI struct {
 	attributes
 }
 
 var (
-	yahooApiUrl     = `https://query1.finance.yahoo.com/v8/finance/chart/%s%s=X?region=US&lang=en-US&includePrePost=false&interval=1d&range=1d&corsDomain=finance.yahoo.com&.tsrc=finance`
-	yahooApiHeaders = map[string][]string{
+	yahooAPIUrl     = `https://query1.finance.yahoo.com/v8/finance/chart/%s%s=X?region=US&lang=en-US&includePrePost=false&interval=1d&range=1d&corsDomain=finance.yahoo.com&.tsrc=finance`
+	yahooAPIHeaders = map[string][]string{
 		`Accept`:          {`text/html,application/xhtml+xml,application/xml,application/json`},
 		`Accept-Encoding`: {`text`},
 	}
 )
 
-func (c *yahooApi) requestRate(from string, to string, opt ...interface{}) (*yahooApi, error) {
+func (c *yahooAPI) requestRate(from string, to string, opt ...interface{}) (*yahooAPI, error) {
 
 	// todo add option opt to add more headers or client configurations
 	// free mem-leak
 	// optimize for memory leak
 	// todo optimize curl connection
 
-	url := fmt.Sprintf(yahooApiUrl, from, to)
+	url := fmt.Sprintf(yahooAPIUrl, from, to)
 	req, _ := http.NewRequest("GET", url, nil)
 
-	yahooApiHeaders[`User-Agent`] = []string{c.userAgent}
-	req.Header = yahooApiHeaders
+	yahooAPIHeaders[`User-Agent`] = []string{c.userAgent}
+	req.Header = yahooAPIHeaders
 
 	res, err := c.Client.Do(req)
 
@@ -55,22 +55,22 @@ func (c *yahooApi) requestRate(from string, to string, opt ...interface{}) (*yah
 }
 
 // GetRateValue ... get exchange rate value
-func (c *yahooApi) GetRateValue() float64 {
+func (c *yahooAPI) GetRateValue() float64 {
 	return c.rateValue
 }
 
 // GetRateDateTime ... return rate datetime
-func (c *yahooApi) GetRateDateTime() string {
+func (c *yahooAPI) GetRateDateTime() string {
 	return c.rateDate.Format(time.RFC3339)
 }
 
 // GetExchangerName ... return exchanger name
-func (c *yahooApi) GetExchangerName() string {
+func (c *yahooAPI) GetExchangerName() string {
 	return c.name
 }
 
 // Latest ... populate latest exchange rate
-func (c *yahooApi) Latest(from string, to string, opt ...interface{}) error {
+func (c *yahooAPI) Latest(from string, to string, opt ...interface{}) error {
 
 	_, err := c.requestRate(from, to, opt)
 	if err != nil {
@@ -106,8 +106,8 @@ func (c *yahooApi) Latest(from string, to string, opt ...interface{}) error {
 	return nil
 }
 
-// NewYahooApi ... return new instance of yahooApi
-func NewYahooApi(opt map[string]string) *yahooApi {
+// NewyahooAPI ... return new instance of yahooAPI
+func NewyahooAPI(opt map[string]string) *yahooAPI {
 	keepAliveTimeout := 600 * time.Second
 	timeout := 5 * time.Second
 	defaultTransport := &http.Transport{
@@ -134,6 +134,6 @@ func NewYahooApi(opt map[string]string) *yahooApi {
 		attr.userAgent = opt[`userAgent`]
 	}
 
-	r := &yahooApi{attr}
+	r := &yahooAPI{attr}
 	return r
 }

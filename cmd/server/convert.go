@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/go-ozzo/ozzo-validation"
-	mex "github.com/monocash/exchange-rates/pkg/exchanger"
+	mex "github.com/monocash/exchange-rates/pkg/exchanger/convert"
 	"github.com/monocash/exchange-rates/pkg/swap"
 	"io/ioutil"
 	"math"
@@ -116,13 +116,13 @@ var ConvertPost = func(w http.ResponseWriter, r *http.Request) {
 
 			switch v.Name {
 			case `google`:
-				e = mex.NewGoogleApi(opt)
+				e = mex.NewgoogleAPI(opt)
 				break
 			case `yahoo`:
-				e = mex.NewYahooApi(opt)
+				e = mex.NewyahooAPI(opt)
 				break
 			case `themoneyconverter`:
-				e = mex.NewTheMoneyConverterApi(opt)
+				e = mex.NewtheMoneyConverterAPI(opt)
 				break
 			}
 			Swap.AddExchanger(e)
