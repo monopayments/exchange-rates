@@ -12,11 +12,11 @@ func main() {
 	SwapTest := swap.NewSwap()
 
 	SwapTest.
-		AddExchanger(mex.NewinvestingAPI(nil)).
+		AddExchanger(mex.NewyahooAPI(nil)).
 		Build()
 
-	euroToUsdRate := SwapTest.Latest("USD/TRY")
-	fmt.Println(euroToUsdRate.GetRateValue())
-	fmt.Println(euroToUsdRate.GetRateDateTime())
-	fmt.Println(euroToUsdRate.GetExchangerName())
+	usdToTryRate := SwapTest.Latest("USD/TRY")
+	fmt.Println(usdToTryRate.GetRateValue())
+	fmt.Println(usdToTryRate.GetRateDateTime())
+	fmt.Println(usdToTryRate.GetExchangerName())
 }
